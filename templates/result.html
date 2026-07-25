@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analysis Result</title>
+</head>
+<body>
+    <h1>Analysis Result</h1>
+    <p><strong>File:</strong> {{ filename }}</p>
+
+    <h2>AI-Generated: {{ ai_score }}%</h2>
+    <h2>Real / Human: {{ real_score }}%</h2>
+
+    {% if ai_score > 50 %}
+        <p>⚠️ This image is likely AI-generated.</p>
+    {% else %}
+        <p>✅ This image appears to be real.</p>
+    {% endif %}
+
+    <br>
+    <a href="/">← Analyze another image</a>
+</body>
+</html>
