@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Content Detector</title>
+</head>
+<body>
+    <h1>AI Content Authenticity Analyzer</h1>
+    <p>Upload an image to check if it was AI-generated.</p>
+
+    <form action="/analyze" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*" required>
+        <br><br>
+        <button type="submit">Analyze</button>
+    </form>
+</body>
+</html>
