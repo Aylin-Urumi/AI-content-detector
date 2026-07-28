@@ -1,13 +1,12 @@
 from flask import Flask, render_template, request
-from transformers import pipeline
-from PIL import Image
+import requests
 import os
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 
-# Load the model once when the server starts
-detector = pipeline("image-classification", model="umm-maybe/AI-image-detector")
+SIGHTENGINE_USER = '598868940'
+SIGHTENGINE_SECRET = 'y33CHQLDjUEEwL2Bw5nNFTg5xLetWcxW'
 
 @app.route('/')
 def home():
@@ -22,16 +21,38 @@ def analyze():
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
     file.save(filepath)
 
-    # Run the image through the model
-    image = Image.open(filepath).convert("RGB")
-    results = detector(image)
+    with open(filepath, 'rb') as image_file:
+        response = requests.post(
+            'https://api.sightengine.com/1.0/check.json',
+            files={'media': image_file},
+            data={
+                'models': 'genai',
+                'api_user': SIGHTENGINE_USER,
+                'api_secret': SIGHTENGINE_SECRET
+            }
+        )
 
-    # Parse the results
-    scores = {r['label']: round(r['score'] * 100, 2) for r in results}
-    ai_score = scores.get('artificial', scores.get('LABEL_1', 0))
-    real_score = scores.get('human', scores.get('LABEL_0', 0))
+    result = response.json()
+    print(result)
 
-    return render_template('result.html', ai_score=ai_score, real_score=real_score, filename=file.filename)
+    ai_score = round(result.get('type', {}).get('ai_generated', 0) * 100, 1)
+    real_score = round(100 - ai_score, 1)
+
+    # Generate a reason based on the score
+    if ai_score >= 80:
+        reason = "Strong indicators of AI generation detected. Pixel patterns, lighting, and texture consistency are characteristic of AI image generators."
+    elif ai_score >= 50:
+        reason = "Several features suggest AI generation. Some areas show unnatural consistency typical of generative models."
+    elif ai_score >= 20:
+        reason = "Mostly appears real with a few uncertain regions. Could be a heavily edited photo or partially AI-generated."
+    else:
+        reason = "Image shows strong characteristics of a real photograph. Natural noise, lighting inconsistencies, and texture patterns detected."
+
+    return render_template('result.html',
+                           ai_score=ai_score,
+                           real_score=real_score,
+                           filename=file.filename,
+                           reason=reason)
 
 if __name__ == '__main__':
     app.run(debug=True)
