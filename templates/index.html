@@ -2,16 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AI Content Detector</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reality Check — AI Content Authenticity Analyzer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0a0f1a; font-family: 'Segoe UI', sans-serif; color: #e0f7f4; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        .nav { width: 100%; padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a3a3a; }
+        .logo { font-size: 1.3rem; font-weight: 700; color: #00d4b4; letter-spacing: 1px; }
+        .logo span { color: #ffffff; }
+        .hero { text-align: center; padding: 4rem 2rem 2rem; max-width: 640px; width: 100%; }
+        .badge { display: inline-block; background: #0d2a2a; color: #00d4b4; border: 1px solid #00d4b4; border-radius: 20px; font-size: 0.75rem; padding: 0.3rem 0.9rem; margin-bottom: 1.5rem; letter-spacing: 1px; }
+        h1 { font-size: 2.6rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
+        h1 span { color: #00d4b4; }
+        .subtitle { color: #7ab8b4; font-size: 1rem; line-height: 1.6; margin-bottom: 2.5rem; }
+        .upload-box { background: #0d1f2d; border: 2px dashed #1a4a4a; border-radius: 16px; padding: 2.5rem 2rem; width: 100%; text-align: center; transition: border-color 0.2s; }
+        .upload-box:hover { border-color: #00d4b4; }
+        .upload-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .upload-box p { color: #7ab8b4; font-size: 0.9rem; margin-bottom: 1.5rem; }
+        .file-input { display: none; }
+        .upload-label { display: inline-block; background: #00d4b4; color: #0a0f1a; padding: 0.7rem 2rem; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.95rem; }
+        .file-name { margin-top: 0.8rem; font-size: 0.85rem; color: #00d4b4; min-height: 1.2rem; }
+        .analyze-btn { margin-top: 1.2rem; width: 100%; padding: 0.85rem; background: #006a5c; color: #fff; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; transition: background 0.2s; }
+        .analyze-btn:hover { background: #008a76; }
+        .features { display: flex; gap: 1rem; margin-top: 3rem; flex-wrap: wrap; justify-content: center; }
+        .feature { background: #0d1f2d; border: 1px solid #1a3a3a; border-radius: 12px; padding: 1rem 1.2rem; font-size: 0.85rem; color: #7ab8b4; min-width: 140px; text-align: center; }
+        .feature strong { display: block; color: #00d4b4; margin-bottom: 0.3rem; font-size: 0.95rem; }
+        .footer { margin-top: 4rem; padding: 1.5rem; color: #3a6a6a; font-size: 0.8rem; text-align: center; }
+    </style>
 </head>
 <body>
-    <h1>AI Content Authenticity Analyzer</h1>
-    <p>Upload an image to check if it was AI-generated.</p>
-
-    <form action="/analyze" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" accept="image/*" required>
-        <br><br>
-        <button type="submit">Analyze</button>
-    </form>
+    <nav class="nav">
+        <div class="logo">Reality<span>Check</span></div>
+        <div style="font-size:0.8rem; color:#7ab8b4;">AI Content Authenticity Analyzer</div>
+    </nav>
+    <div class="hero">
+        <div class="badge">⚡ POWERED BY AI DETECTION</div>
+        <h1>Is it <span>real</span> or<br>AI-generated?</h1>
+        <p class="subtitle">Upload any image and get an instant authenticity score with detailed analysis. Know the truth in seconds.</p>
+        <form action="/analyze" method="POST" enctype="multipart/form-data">
+            <div class="upload-box">
+                <div class="upload-icon">🔍</div>
+                <p>Drag and drop your image here, or browse to upload</p>
+                <label class="upload-label" for="file">Choose Image</label>
+                <input class="file-input" type="file" name="file" id="file" accept="image/*" required onchange="showFileName(this)">
+                <div class="file-name" id="file-name">No file chosen</div>
+                <button type="submit" class="analyze-btn">Analyze Image</button>
+            </div>
+        </form>
+        <div class="features">
+            <div class="feature"><strong>Instant</strong>Results in seconds</div>
+            <div class="feature"><strong>Accurate</strong>AI-powered engine</div>
+            <div class="feature"><strong>Private</strong>Images not stored</div>
+        </div>
+    </div>
+    <div class="footer">© 2025 RealityCheck. All rights reserved.</div>
+    <script>
+        function showFileName(input) {
+            const name = input.files[0] ? input.files[0].name : 'No file chosen';
+            document.getElementById('file-name').textContent = name;
+        }
+    </script>
 </body>
 </html>

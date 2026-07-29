@@ -2,24 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Analysis Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result — Reality Check</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0a0f1a; font-family: 'Segoe UI', sans-serif; color: #e0f7f4; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        .nav { width: 100%; padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a3a3a; }
+        .logo { font-size: 1.3rem; font-weight: 700; color: #00d4b4; letter-spacing: 1px; }
+        .logo span { color: #ffffff; }
+        .container { max-width: 600px; width: 100%; padding: 3rem 2rem; }
+        h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .filename { color: #7ab8b4; font-size: 0.9rem; margin-bottom: 2rem; }
+        .verdict { border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; text-align: center; }
+        .verdict.ai { background: #1a0f0f; border: 1px solid #6a2020; }
+        .verdict.real { background: #0a1a14; border: 1px solid #1a6a4a; }
+        .verdict-icon { font-size: 3rem; margin-bottom: 0.8rem; }
+        .verdict-label { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .verdict.ai .verdict-label { color: #ff6b6b; }
+        .verdict.real .verdict-label { color: #00d4b4; }
+        .score { font-size: 3.5rem; font-weight: 800; }
+        .verdict.ai .score { color: #ff6b6b; }
+        .verdict.real .score { color: #00d4b4; }
+        .bars { background: #0d1f2d; border: 1px solid #1a3a3a; border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .bar-label { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .bar-track { background: #1a2a3a; border-radius: 99px; height: 10px; margin-bottom: 1.2rem; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 99px; transition: width 1s ease; }
+        .bar-fill.ai { background: #ff6b6b; }
+        .bar-fill.real { background: #00d4b4; }
+        .reason-box { background: #0d1f2d; border: 1px solid #1a3a3a; border-left: 3px solid #00d4b4; border-radius: 12px; padding: 1.2rem 1.5rem; margin-bottom: 2rem; }
+        .reason-box h3 { font-size: 0.85rem; color: #7ab8b4; margin-bottom: 0.5rem; letter-spacing: 1px; }
+        .reason-box p { font-size: 0.95rem; line-height: 1.6; color: #c0e8e4; }
+        .back-btn { display: block; text-align: center; background: #006a5c; color: #fff; padding: 0.85rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1rem; transition: background 0.2s; }
+        .back-btn:hover { background: #008a76; }
+    </style>
 </head>
 <body>
-    <h1>Analysis Result</h1>
-    <p><strong>File:</strong> {{ filename }}</p>
+    <nav class="nav">
+        <div class="logo">Reality<span>Check</span></div>
+        <div style="font-size:0.8rem; color:#7ab8b4;">AI Content Authenticity Analyzer</div>
+    </nav>
+    <div class="container">
+        <h2>Analysis Complete</h2>
+        <p class="filename">File: {{ filename }}</p>
 
-    <h2>AI-Generated: {{ ai_score }}%</h2>
-    <h2>Real / Human: {{ real_score }}%</h2>
+        {% if ai_score > 50 %}
+        <div class="verdict ai">
+            <div class="verdict-icon">⚠️</div>
+            <div class="verdict-label">Likely AI-Generated</div>
+            <div class="score">{{ ai_score }}%</div>
+        </div>
+        {% else %}
+        <div class="verdict real">
+            <div class="verdict-icon">✅</div>
+            <div class="verdict-label">Likely Real / Human</div>
+            <div class="score">{{ real_score }}%</div>
+        </div>
+        {% endif %}
 
-    {% if ai_score > 50 %}
-        <p>⚠️ This image is likely AI-generated.</p>
-    {% else %}
-        <p>✅ This image appears to be real.</p>
-    {% endif %}
+        <div class="bars">
+            <div class="bar-label"><span>AI-Generated</span><span>{{ ai_score }}%</span></div>
+            <div class="bar-track"><div class="bar-fill ai" style="width: {{ ai_score }}%"></div></div>
+            <div class="bar-label"><span>Real / Human</span><span>{{ real_score }}%</span></div>
+            <div class="bar-track"><div class="bar-fill real" style="width: {{ real_score }}%"></div></div>
+        </div>
 
-    <p><strong>Why:</strong> {{ reason }}</p>
+        <div class="reason-box">
+            <h3>WHY WE THINK THIS</h3>
+            <p>{{ reason }}</p>
+        </div>
 
-    <br>
-    <a href="/">← Analyze another image</a>
+        <a href="/" class="back-btn">← Analyze Another Image</a>
+    </div>
 </body>
 </html>
