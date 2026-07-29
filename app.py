@@ -4,6 +4,7 @@ import os
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
+os.makedirs('uploads', exist_ok=True)
 
 SIGHTENGINE_USER = os.environ.get('SIGHTENGINE_USER')
 SIGHTENGINE_SECRET = os.environ.get('SIGHTENGINE_SECRET')
