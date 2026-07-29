@@ -33,7 +33,10 @@
 <body>
     <nav class="nav">
         <div class="logo">Reality<span>Check</span></div>
-        <div style="font-size:0.8rem; color:#7ab8b4;">AI Content Authenticity Analyzer</div>
+        <div class="nav-links">
+    <a href="/" style="color:#7ab8b4; text-decoration:none; margin-left:1.5rem; font-size:0.9rem;">Home</a>
+    <a href="/about" style="color:#7ab8b4; text-decoration:none; margin-left:1.5rem; font-size:0.9rem;">About</a>
+</div>
     </nav>
     <div class="hero">
         <div class="badge">⚡ POWERED BY AI DETECTION</div>
@@ -61,6 +64,11 @@
             const name = input.files[0] ? input.files[0].name : 'No file chosen';
             document.getElementById('file-name').textContent = name;
         }
+        document.querySelector('form').addEventListener('submit', function() {
+            document.getElementById('file-name').textContent = 'Analyzing... please wait ⏳';
+            document.querySelector('.analyze-btn').textContent = 'Analyzing...';
+            document.querySelector('.analyze-btn').disabled = true;
+        });
     </script>
 </body>
 </html>
