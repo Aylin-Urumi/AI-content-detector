@@ -5,8 +5,8 @@ import os
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 
-SIGHTENGINE_USER = '598868940'
-SIGHTENGINE_SECRET = 'y33CHQLDjUEEwL2Bw5nNFTg5xLetWcxW'
+SIGHTENGINE_USER = os.environ.get('SIGHTENGINE_USER')
+SIGHTENGINE_SECRET = os.environ.get('SIGHTENGINE_SECRET')
 
 @app.route('/')
 def home():
