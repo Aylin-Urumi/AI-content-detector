@@ -8,7 +8,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-V6Z9KGWQDD');
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,15 +36,26 @@
         .feature { background: #0d1f2d; border: 1px solid #1a3a3a; border-radius: 12px; padding: 1rem 1.2rem; font-size: 0.85rem; color: #7ab8b4; min-width: 140px; text-align: center; }
         .feature strong { display: block; color: #00d4b4; margin-bottom: 0.3rem; font-size: 0.95rem; }
         .footer { margin-top: 4rem; padding: 1.5rem; color: #3a6a6a; font-size: 0.8rem; text-align: center; }
+        .loader-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 15, 26, 0.92); z-index: 999; flex-direction: column; align-items: center; justify-content: center; }
+        .loader-overlay.active { display: flex; }
+        .spinner { width: 60px; height: 60px; border: 4px solid #1a3a3a; border-top: 4px solid #00d4b4; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1.5rem; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loader-text { color: #00d4b4; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .loader-sub { color: #7ab8b4; font-size: 0.85rem; }
     </style>
 </head>
 <body>
+    <div class="loader-overlay" id="loader">
+        <div class="spinner"></div>
+        <div class="loader-text">Analyzing image...</div>
+        <div class="loader-sub">This usually takes a few seconds</div>
+    </div>
     <nav class="nav">
         <div class="logo">Reality<span>Check</span></div>
         <div class="nav-links">
-    <a href="/" style="color:#7ab8b4; text-decoration:none; margin-left:1.5rem; font-size:0.9rem;">Home</a>
-    <a href="/about" style="color:#7ab8b4; text-decoration:none; margin-left:1.5rem; font-size:0.9rem;">About</a>
-</div>
+            <a href="/" style="color:#7ab8b4; text-decoration:none; margin-left:1.5rem; font-size:0.9rem;">Home</a>
+            <a href="/about" style="color:#7ab8b4; text-decoration:none; margin-left:1.5rem; font-size:0.9rem;">About</a>
+        </div>
     </nav>
     <div class="hero">
         <div class="badge">⚡ POWERED BY AI DETECTION</div>
@@ -55,7 +65,7 @@
             <div class="upload-box">
                 <div class="upload-icon">🔍</div>
                 <p>Drag and drop your image here, or browse to upload</p>
-                <label class="upload-label" for="file">Choose Image</label>
+                <label class="upload-label" name="file" for="file">Choose Image</label>
                 <input class="file-input" type="file" name="file" id="file" accept="image/*" required onchange="showFileName(this)">
                 <div class="file-name" id="file-name">No file chosen</div>
                 <button type="submit" class="analyze-btn">Analyze Image</button>
@@ -73,9 +83,10 @@
             const name = input.files[0] ? input.files[0].name : 'No file chosen';
             document.getElementById('file-name').textContent = name;
         }
-        document.querySelector('form').addEventListener('submit', function() {
-            document.getElementById('file-name').textContent = 'Analyzing... please wait ⏳';
-            document.querySelector('.analyze-btn').textContent = 'Analyzing...';
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const file = document.getElementById('file').files[0];
+            if (!file) return;
+            document.getElementById('loader').classList.add('active');
             document.querySelector('.analyze-btn').disabled = true;
         });
     </script>
