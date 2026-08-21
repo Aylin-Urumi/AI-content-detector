@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error — Reality Check</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0a0f1a; font-family: 'Segoe UI', sans-serif; color: #e0f7f4; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        .nav { width: 100%; padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a3a3a; }
+        .logo { font-size: 1.3rem; font-weight: 700; color: #00d4b4; letter-spacing: 1px; text-decoration: none; }
+        .logo span { color: #ffffff; }
+        .container { max-width: 600px; width: 100%; padding: 4rem 2rem; text-align: center; }
+        .error-icon { font-size: 4rem; margin-bottom: 1.5rem; }
+        h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; color: #ff6b6b; }
+        p { color: #7ab8b4; line-height: 1.7; margin-bottom: 2rem; font-size: 0.95rem; }
+        .back-btn { display: inline-block; background: #006a5c; color: #fff; padding: 0.85rem 2rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1rem; }
+        .back-btn:hover { background: #008a76; }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="/" class="logo">Reality<span>Check</span></a>
+    </nav>
+    <div class="container">
+        <div class="error-icon">⚠️</div>
+        <h1>Something went wrong</h1>
+        <p>{{ message }}</p>
+        <a href="/" class="back-btn">← Try again</a>
+    </div>
+</body>
+</html>
