@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import requests
 import os
 
@@ -9,6 +9,20 @@ os.makedirs('uploads', exist_ok=True)
 SIGHTENGINE_USER = os.environ.get('SIGHTENGINE_USER')
 SIGHTENGINE_SECRET = os.environ.get('SIGHTENGINE_SECRET')
 
+COUNTER_FILE = 'counter.txt'
+
+def get_count():
+    if not os.path.exists(COUNTER_FILE):
+        return 0
+    with open(COUNTER_FILE, 'r') as f:
+        return int(f.read().strip() or 0)
+
+def increment_count():
+    count = get_count() + 1
+    with open(COUNTER_FILE, 'w') as f:
+        f.write(str(count))
+    return count
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -16,6 +30,10 @@ def home():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+@app.route('/count')
+def count():
+    return jsonify({'count': get_count()})
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
@@ -61,6 +79,8 @@ def analyze():
         else:
             reason = "Image shows strong characteristics of a real photograph. Natural noise, lighting inconsistencies, and texture patterns detected."
 
+        total = increment_count()
+
     except Exception as e:
         print(f"Error: {e}")
         return render_template('error.html', message="Something went wrong during analysis. Please try again.")
@@ -73,7 +93,8 @@ def analyze():
                            ai_score=ai_score,
                            real_score=real_score,
                            filename=filename,
-                           reason=reason)
+                           reason=reason,
+                           total=total)
 
 if __name__ == '__main__':
     app.run(debug=True)

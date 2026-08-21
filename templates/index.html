@@ -65,7 +65,7 @@
             <div class="upload-box">
                 <div class="upload-icon">🔍</div>
                 <p>Drag and drop your image here, or browse to upload</p>
-                <label class="upload-label" name="file" for="file">Choose Image</label>
+                <label class="upload-label" for="file">Choose Image</label>
                 <input class="file-input" type="file" name="file" id="file" accept="image/*" required onchange="showFileName(this)">
                 <div class="file-name" id="file-name">No file chosen</div>
                 <button type="submit" class="analyze-btn">Analyze Image</button>
@@ -75,6 +75,7 @@
             <div class="feature"><strong>Instant</strong>Results in seconds</div>
             <div class="feature"><strong>Accurate</strong>AI-powered engine</div>
             <div class="feature"><strong>Private</strong>Images not stored</div>
+            <div class="feature"><strong id="counter">...</strong>Images analyzed</div>
         </div>
     </div>
     <div class="footer">© 2025 RealityCheck. All rights reserved.</div>
@@ -89,6 +90,11 @@
             document.getElementById('loader').classList.add('active');
             document.querySelector('.analyze-btn').disabled = true;
         });
+        fetch('/count')
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('counter').textContent = data.count.toLocaleString();
+            });
     </script>
 </body>
 </html>
