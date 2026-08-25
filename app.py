@@ -41,7 +41,8 @@ def analyze_text():
             'https://api.sightengine.com/1.0/text/check.json',
             data={
                 'text': text,
-                'models': 'genai',
+                'models': 'ai-generated',
+                'mode': 'ml',
                 'lang': 'en',
                 'api_user': SIGHTENGINE_USER,
                 'api_secret': SIGHTENGINE_SECRET
