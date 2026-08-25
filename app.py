@@ -30,6 +30,53 @@ def home():
 @app.route('/about')
 def about():
     return render_template('about.html')
+@app.route('/analyze-text', methods=['POST'])
+def analyze_text():
+    text = request.form.get('text')
+    if not text or len(text.strip()) < 50:
+        return render_template('error.html', message="Please enter at least 50 characters of text to analyze.")
+
+    try:
+        response = requests.post(
+            'https://api.sightengine.com/1.0/text/check.json',
+            data={
+                'text': text,
+                'models': 'genai',
+                'lang': 'en',
+                'api_user': SIGHTENGINE_USER,
+                'api_secret': SIGHTENGINE_SECRET
+            }
+        )
+        result = response.json()
+        print(result)
+
+        if result.get('status') != 'success':
+            return render_template('error.html', message="Text analysis failed. Please try again.")
+
+        ai_score = round(result.get('ai_generated', {}).get('score', 0) * 100, 1)
+        real_score = round(100 - ai_score, 1)
+
+        if ai_score >= 80:
+            reason = "Strong indicators of AI-generated text detected. Sentence structure, word choice, and flow are highly consistent with large language models like ChatGPT."
+        elif ai_score >= 50:
+            reason = "Several patterns suggest AI involvement. The text shows unnatural consistency and phrasing typical of AI writing tools."
+        elif ai_score >= 20:
+            reason = "Mostly appears human-written with some uncertain sections. Could be lightly edited AI text or a very structured human writer."
+        else:
+            reason = "Text shows strong characteristics of human writing. Natural variation in tone, structure, and word choice detected."
+
+        total = increment_count()
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return render_template('error.html', message="Something went wrong during analysis. Please try again.")
+
+    return render_template('text_result.html',
+                           ai_score=ai_score,
+                           real_score=real_score,
+                           reason=reason,
+                           total=total,
+                           text_preview=text[:200])
 
 @app.route('/count')
 def count():
