@@ -8,6 +8,7 @@ os.makedirs('uploads', exist_ok=True)
 
 SIGHTENGINE_USER = os.environ.get('SIGHTENGINE_USER')
 SIGHTENGINE_SECRET = os.environ.get('SIGHTENGINE_SECRET')
+AIDETECTOR_API_KEY = os.environ.get('AIDETECTOR_API_KEY')
 
 COUNTER_FILE = 'counter.txt'
 
@@ -30,6 +31,11 @@ def home():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+@app.route('/count')
+def count():
+    return jsonify({'count': get_count()})
+
 @app.route('/analyze-text', methods=['POST'])
 def analyze_text():
     text = request.form.get('text')
@@ -38,23 +44,19 @@ def analyze_text():
 
     try:
         response = requests.post(
-            'https://api.sightengine.com/1.0/text/check.json',
-            data={
-                'text': text,
-                'models': 'ai-generated',
-                'mode': 'ml',
-                'lang': 'en',
-                'api_user': SIGHTENGINE_USER,
-                'api_secret': SIGHTENGINE_SECRET
-            }
+            'https://aidetectorapi.com/v1/detect',
+            headers={
+                'Authorization': f'Bearer {AIDETECTOR_API_KEY}',
+                'Content-Type': 'application/json'
+            },
+            json={'text': text}
         )
+        print(response.status_code)
+        print(response.text)
         result = response.json()
         print(result)
 
-        if result.get('status') != 'success':
-            return render_template('error.html', message="Text analysis failed. Please try again.")
-
-        ai_score = round(result.get('ai_generated', {}).get('score', 0) * 100, 1)
+        ai_score = round(float(result.get('score', 0)) * 100, 1)
         real_score = round(100 - ai_score, 1)
 
         if ai_score >= 80:
@@ -78,10 +80,6 @@ def analyze_text():
                            reason=reason,
                            total=total,
                            text_preview=text[:200])
-
-@app.route('/count')
-def count():
-    return jsonify({'count': get_count()})
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
