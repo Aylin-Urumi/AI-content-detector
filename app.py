@@ -36,6 +36,10 @@ def about():
 def count():
     return jsonify({'count': get_count()})
 
+@app.route('/ping')
+def ping():
+    return 'OK', 200
+
 @app.route('/analyze-text', methods=['POST'])
 def analyze_text():
     text = request.form.get('text')
@@ -44,19 +48,17 @@ def analyze_text():
 
     try:
         response = requests.post(
-            'https://aidetectorapi.com/v1/detect',
+            'https://developer-portal.walterwrites.ai/api/detector/',
             headers={
-                'Authorization': f'Bearer {AIDETECTOR_API_KEY}',
+                'X-API-Key': AIDETECTOR_API_KEY,
                 'Content-Type': 'application/json'
             },
-            json={'text': text}
+            json={'content': text}
         )
-        print(response.status_code)
-        print(response.text)
         result = response.json()
         print(result)
 
-        ai_score = round(float(result.get('score', 0)) * 100, 1)
+        ai_score = round(float(result.get('ai_score', 0)) * 100, 1)
         real_score = round(100 - ai_score, 1)
 
         if ai_score >= 80:
