@@ -8,37 +8,80 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-V6Z9KGWQDD');
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Reality Check — Find out if an image is AI-generated or real. Instant authenticity analysis powered by AI.">
-    <meta property="og:title" content="Reality Check — AI Content Authenticity Analyzer">
-    <meta property="og:description" content="Upload any image and find out instantly if it was AI-generated or real. Free, fast, and accurate.">
-    <meta property="og:url" content="https://reality-check-rxqu.onrender.com">
+    <meta name="description" content="About Reality Check — AI Content Authenticity Analyzer. Learn how it works, who built it, and why it matters.">
+    <meta property="og:title" content="About — Reality Check">
+    <meta property="og:description" content="Learn how Reality Check detects AI-generated images and who built it.">
+    <meta property="og:url" content="https://reality-check-rxqu.onrender.com/about">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Reality Check — AI Content Authenticity Analyzer">
-    <meta name="twitter:description" content="Upload any image and find out instantly if it was AI-generated or real. Free, fast, and accurate.">
+    <meta name="twitter:title" content="About — Reality Check">
+    <meta name="twitter:description" content="Learn how Reality Check detects AI-generated images and who built it.">
     <title>About — Reality Check</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0a0f1a; font-family: 'Segoe UI', sans-serif; color: #e0f7f4; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+
+        /* Nav */
         .nav { width: 100%; padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a3a3a; }
         .logo { font-size: 1.3rem; font-weight: 700; color: #00d4b4; letter-spacing: 1px; text-decoration: none; }
         .logo span { color: #ffffff; }
-        .nav-links a { color: #7ab8b4; text-decoration: none; margin-left: 1.5rem; font-size: 0.9rem; }
+        .nav-links a { color: #7ab8b4; text-decoration: none; margin-left: 1.5rem; font-size: 0.9rem; transition: color 0.2s; }
         .nav-links a:hover { color: #00d4b4; }
-        .container { max-width: 640px; width: 100%; padding: 3rem 2rem; }
-        h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
-        h1 span { color: #00d4b4; }
-        .subtitle { color: #7ab8b4; margin-bottom: 2.5rem; font-size: 0.95rem; }
-        .card { background: #0d1f2d; border: 1px solid #1a3a3a; border-radius: 16px; padding: 1.8rem; margin-bottom: 1.5rem; }
-        .card h2 { font-size: 1.1rem; color: #00d4b4; margin-bottom: 0.8rem; }
-        .card p { color: #c0e8e4; line-height: 1.7; font-size: 0.95rem; }
-        .back-btn { display: inline-block; margin-top: 1rem; color: #00d4b4; text-decoration: none; font-size: 0.9rem; }
-        .back-btn:hover { text-decoration: underline; }
-        .tag { display: inline-block; background: #0d2a2a; color: #00d4b4; border: 1px solid #00d4b4; border-radius: 20px; font-size: 0.75rem; padding: 0.2rem 0.8rem; margin: 0.2rem; }
+
+        /* Hero */
+        .hero { text-align: center; padding: 3.5rem 2rem 2rem; max-width: 680px; width: 100%; }
+        .badge { display: inline-block; background: #0d2a2a; color: #00d4b4; border: 1px solid #00d4b4; border-radius: 20px; font-size: 0.75rem; padding: 0.3rem 0.9rem; margin-bottom: 1.2rem; letter-spacing: 1px; }
+        .hero h1 { font-size: 2.4rem; font-weight: 800; line-height: 1.2; margin-bottom: 0.8rem; }
+        .hero h1 span { color: #00d4b4; }
+        .hero p { color: #7ab8b4; font-size: 1rem; line-height: 1.7; max-width: 520px; margin: 0 auto; }
+
+        /* Container */
+        .container { max-width: 680px; width: 100%; padding: 2rem 2rem 4rem; }
+
+        /* Cards */
+        .card { background: #0d1f2d; border: 1px solid #1a3a3a; border-radius: 16px; padding: 2rem; margin-bottom: 1.2rem; transition: border-color 0.2s; }
+        .card:hover { border-color: #1a4a4a; }
+        .card-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem; }
+        .card-icon { font-size: 1.4rem; }
+        .card h2 { font-size: 1.05rem; font-weight: 700; color: #00d4b4; }
+        .card p { color: #c0e8e4; line-height: 1.8; font-size: 0.95rem; }
+        .card p + p { margin-top: 0.8rem; }
+
+        /* How it works steps */
+        .steps { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 0.5rem; }
+        .step { display: flex; align-items: flex-start; gap: 1rem; }
+        .step-num { background: #0d2a2a; color: #00d4b4; border: 1px solid #00d4b4; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+        .step-text { color: #c0e8e4; font-size: 0.95rem; line-height: 1.6; }
+        .step-text strong { color: #e0f7f4; }
+
+        /* Tech tags */
+        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+        .tag { display: inline-flex; align-items: center; gap: 0.4rem; background: #0d2a2a; color: #00d4b4; border: 1px solid #1a4a4a; border-radius: 8px; font-size: 0.82rem; padding: 0.35rem 0.8rem; font-weight: 500; }
+        .tag-icon { font-size: 1rem; }
+
+        /* Privacy list */
+        .privacy-list { list-style: none; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
+        .privacy-list li { display: flex; align-items: flex-start; gap: 0.7rem; color: #c0e8e4; font-size: 0.95rem; line-height: 1.6; }
+        .privacy-list li::before { content: "✓"; color: #00d4b4; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+        /* Author card */
+        .author-card { background: linear-gradient(135deg, #0d1f2d 0%, #0a1a2a 100%); border: 1px solid #1a4a4a; border-radius: 16px; padding: 2rem; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1.5rem; }
+        .author-avatar { width: 60px; height: 60px; background: linear-gradient(135deg, #00d4b4, #006a5c); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0; }
+        .author-info h2 { font-size: 1.05rem; color: #00d4b4; font-weight: 700; margin-bottom: 0.3rem; }
+        .author-info p { color: #c0e8e4; font-size: 0.9rem; line-height: 1.6; }
+        .author-link { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.6rem; color: #00d4b4; text-decoration: none; font-size: 0.85rem; font-weight: 600; border: 1px solid #1a4a4a; border-radius: 6px; padding: 0.3rem 0.7rem; transition: background 0.2s; }
+        .author-link:hover { background: #0d2a2a; }
+
+        /* CTA */
+        .cta { text-align: center; margin-top: 2rem; }
+        .cta-btn { display: inline-block; background: #00d4b4; color: #0a0f1a; padding: 0.85rem 2.5rem; border-radius: 10px; font-weight: 700; font-size: 1rem; text-decoration: none; letter-spacing: 0.5px; transition: background 0.2s; }
+        .cta-btn:hover { background: #00b89a; }
+        .cta p { color: #3a6a6a; font-size: 0.82rem; margin-top: 0.8rem; }
+
+        .footer { margin-top: 2rem; padding: 1.5rem; color: #3a6a6a; font-size: 0.8rem; text-align: center; }
     </style>
 </head>
 <body>
@@ -49,37 +92,103 @@
             <a href="/about">About</a>
         </div>
     </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="badge">ℹ️ ABOUT THIS PROJECT</div>
+        <h1>Built to expose <span>AI-generated</span> images</h1>
+        <p>As AI image generation becomes indistinguishable from real photography, knowing the truth matters. Reality Check makes authenticity detection instant, free, and accessible to everyone.</p>
+    </div>
+
     <div class="container">
-        <h1>About <span>Reality Check</span></h1>
-        <p class="subtitle">Built to help people identify AI-generated content quickly and accurately.</p>
 
+        <!-- What is it -->
         <div class="card">
-            <h2>What is Reality Check?</h2>
-            <p>Reality Check is an AI content authenticity analyzer that tells you whether an image was created by a human or generated by an AI tool like Midjourney, DALL-E, or Stable Diffusion. Upload any image and get an instant percentage score with a plain-language explanation.</p>
+            <div class="card-header">
+                <span class="card-icon">🔍</span>
+                <h2>What is Reality Check?</h2>
+            </div>
+            <p>Reality Check is an AI content authenticity analyzer that tells you whether an image was created by a human or generated by an AI tool like Midjourney, DALL-E, or Stable Diffusion.</p>
+            <p>Upload any image and get an instant confidence score from 0–100%, along with a plain-language explanation of what the detection engine found — no technical jargon, no sign-up required.</p>
         </div>
 
+        <!-- How it works -->
         <div class="card">
-            <h2>Who built this?</h2>
-            <p>Reality Check was built by Aylin, a Software Engineering student at Fırat University, Turkey. This is an independent project built from scratch as part of a journey into applied AI and web development.</p>
-        </div>
-
-        <div class="card">
-            <h2>How does it work?</h2>
-            <p>When you upload an image, it is sent to an AI detection engine that analyzes pixel patterns, texture consistency, lighting anomalies, and frequency signatures that are characteristic of AI-generated images. The result is returned as a confidence percentage.</p>
-        </div>
-
-        <div class="card">
-            <h2>Built with</h2>
-            <div>
-                <span class="tag">Python</span>
-                <span class="tag">Flask</span>
-                <span class="tag">Sightengine API</span>
-                <span class="tag">HTML & CSS</span>
-                <span class="tag">Render</span>
+            <div class="card-header">
+                <span class="card-icon">⚙️</span>
+                <h2>How does it work?</h2>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div class="step-text"><strong>You upload an image.</strong> JPG, PNG, or WEBP up to any reasonable size.</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-text"><strong>The image is sent to Sightengine's AI detection engine.</strong> It analyzes pixel patterns, texture consistency, lighting anomalies, and frequency signatures that are characteristic of AI-generated images.</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div class="step-text"><strong>A confidence score is returned.</strong> 0% means almost certainly real. 100% means almost certainly AI-generated.</div>
+                </div>
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <div class="step-text"><strong>Your image is immediately deleted.</strong> Nothing is stored on the server after analysis.</div>
+                </div>
             </div>
         </div>
 
-        <a href="/" class="back-btn">← Back to analyzer</a>
+        <!-- Privacy -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-icon">🔒</span>
+                <h2>Privacy & limits</h2>
+            </div>
+            <ul class="privacy-list">
+                <li>Images are deleted from the server immediately after analysis — never stored</li>
+                <li>No account, login, or personal data required</li>
+                <li>5 free analyses per day per visitor to keep the service fair and sustainable</li>
+                <li>API keys and credentials are stored securely via environment variables — never in code</li>
+            </ul>
+        </div>
+
+        <!-- Tech stack -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-icon">🛠️</span>
+                <h2>Built with</h2>
+            </div>
+            <div class="tags">
+                <span class="tag"><span class="tag-icon">🐍</span> Python</span>
+                <span class="tag"><span class="tag-icon">🌶️</span> Flask</span>
+                <span class="tag"><span class="tag-icon">🤖</span> Sightengine API</span>
+                <span class="tag"><span class="tag-icon">🎨</span> HTML & CSS</span>
+                <span class="tag"><span class="tag-icon">☁️</span> Render</span>
+                <span class="tag"><span class="tag-icon">⏱️</span> UptimeRobot</span>
+                <span class="tag"><span class="tag-icon">📊</span> Google Analytics</span>
+            </div>
+        </div>
+
+        <!-- Author -->
+        <div class="author-card">
+            <div class="author-avatar">👩‍💻</div>
+            <div class="author-info">
+                <h2>Built by Aylin</h2>
+                <p>Software Engineering student at Fırat University, Turkey. This is an independent project built from scratch as part of a journey into applied AI, backend development, and real-world deployment.</p>
+                <a href="https://linkedin.com/in/aylin-urumi-5784b1387" target="_blank" class="author-link">
+                    LinkedIn →
+                </a>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta">
+            <a href="/" class="cta-btn">← Try it yourself</a>
+            <p>Free · No sign-up · Results in seconds</p>
+        </div>
+
     </div>
+
+    <div class="footer">© 2025 RealityCheck. All rights reserved.</div>
 </body>
 </html>
