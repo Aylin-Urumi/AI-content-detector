@@ -48,7 +48,7 @@ def ping():
     return 'OK', 200
  
 @app.route('/analyze', methods=['POST'])
-@limiter.limit("10 per hour")
+@limiter.limit("5 per day")
 def analyze():
     file = request.files.get('file')
     if not file:
@@ -111,7 +111,7 @@ def analyze():
  
 @app.errorhandler(429)
 def rate_limit_exceeded(e):
-    return render_template('error.html', message="Too many requests. You can analyze up to 10 images per hour. Please try again later."), 429
+    return render_template('error.html', message="Too many requests. You can analyze up to 5 images per day. Please try again later."), 429
  
 if __name__ == '__main__':
     app.run(debug=True)

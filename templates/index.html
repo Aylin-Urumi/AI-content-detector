@@ -40,6 +40,20 @@
         .file-name { margin-top: 0.8rem; font-size: 0.85rem; color: #00d4b4; min-height: 1.2rem; }
         .analyze-btn { margin-top: 1.2rem; width: 100%; padding: 0.85rem; background: #006a5c; color: #fff; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; transition: background 0.2s; }
         .analyze-btn:hover { background: #008a76; }
+        .analyze-btn:disabled { background: #1a3a3a; color: #3a6a6a; cursor: not-allowed; }
+
+        /* Usage counter */
+        .usage-bar-wrap { margin-top: 1rem; background: #0d1f2d; border: 1px solid #1a3a3a; border-radius: 10px; padding: 0.75rem 1rem; text-align: left; }
+        .usage-bar-label { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: #7ab8b4; margin-bottom: 0.5rem; }
+        .usage-bar-label span.remaining { color: #00d4b4; font-weight: 700; }
+        .usage-bar-label span.remaining.low { color: #f59e0b; }
+        .usage-bar-label span.remaining.none { color: #ef4444; }
+        .usage-bar-bg { background: #1a3a3a; border-radius: 999px; height: 6px; width: 100%; }
+        .usage-bar-fill { height: 6px; border-radius: 999px; background: #00d4b4; transition: width 0.4s ease; }
+        .usage-bar-fill.low { background: #f59e0b; }
+        .usage-bar-fill.none { background: #ef4444; }
+        .usage-reset { font-size: 0.75rem; color: #3a6a6a; margin-top: 0.4rem; text-align: right; }
+
         .features { display: flex; gap: 1rem; margin-top: 3rem; flex-wrap: wrap; justify-content: center; }
         .feature { background: #0d1f2d; border: 1px solid #1a3a3a; border-radius: 12px; padding: 1rem 1.2rem; font-size: 0.85rem; color: #7ab8b4; min-width: 140px; text-align: center; }
         .feature strong { display: block; color: #00d4b4; margin-bottom: 0.3rem; font-size: 0.95rem; }
@@ -69,16 +83,29 @@
         <div class="badge">⚡ POWERED BY AI DETECTION</div>
         <h1>Is it <span>real</span> or<br>AI-generated?</h1>
         <p class="subtitle">Upload any image and get an instant authenticity score with detailed analysis. Know the truth in seconds.</p>
-        <form action="/analyze" method="POST" enctype="multipart/form-data">
+        <form action="/analyze" method="POST" enctype="multipart/form-data" id="analyze-form">
             <div class="upload-box">
                 <div class="upload-icon">🔍</div>
                 <p>Drag and drop your image here, or browse to upload</p>
                 <label class="upload-label" for="file">Choose Image</label>
                 <input class="file-input" type="file" name="file" id="file" accept="image/*" required onchange="showFileName(this)">
                 <div class="file-name" id="file-name">No file chosen</div>
-                <button type="submit" class="analyze-btn">Analyze Image</button>
+                <button type="submit" class="analyze-btn" id="analyze-btn">Analyze Image</button>
             </div>
         </form>
+
+        <!-- Usage counter bar -->
+        <div class="usage-bar-wrap" id="usage-wrap">
+            <div class="usage-bar-label">
+                <span>Daily analyses used</span>
+                <span class="remaining" id="usage-remaining">5 of 5 remaining</span>
+            </div>
+            <div class="usage-bar-bg">
+                <div class="usage-bar-fill" id="usage-bar-fill" style="width: 100%;"></div>
+            </div>
+            <div class="usage-reset" id="usage-reset">Resets at midnight</div>
+        </div>
+
         <div class="features">
             <div class="feature"><strong>Instant</strong>Results in seconds</div>
             <div class="feature"><strong>Accurate</strong>AI-powered engine</div>
@@ -88,16 +115,79 @@
     </div>
     <div class="footer">© 2025 RealityCheck. All rights reserved.</div>
     <script>
+        const DAILY_LIMIT = 5;
+
+        function getTodayKey() {
+            return 'rc_usage_' + new Date().toISOString().slice(0, 10);
+        }
+
+        function getUsageToday() {
+            const key = getTodayKey();
+            // Clear old keys
+            Object.keys(localStorage).forEach(k => {
+                if (k.startsWith('rc_usage_') && k !== key) localStorage.removeItem(k);
+            });
+            return parseInt(localStorage.getItem(key) || '0', 10);
+        }
+
+        function incrementUsage() {
+            const key = getTodayKey();
+            const current = getUsageToday();
+            localStorage.setItem(key, current + 1);
+            return current + 1;
+        }
+
+        function updateUsageUI(used) {
+            const remaining = Math.max(0, DAILY_LIMIT - used);
+            const pct = (remaining / DAILY_LIMIT) * 100;
+
+            const remainingEl = document.getElementById('usage-remaining');
+            const barFill = document.getElementById('usage-bar-fill');
+            const btn = document.getElementById('analyze-btn');
+
+            remainingEl.textContent = remaining + ' of ' + DAILY_LIMIT + ' remaining today';
+            barFill.style.width = pct + '%';
+
+            // Color states
+            remainingEl.className = 'remaining';
+            barFill.className = 'usage-bar-fill';
+
+            if (remaining === 0) {
+                remainingEl.classList.add('none');
+                barFill.classList.add('none');
+                btn.disabled = true;
+                btn.textContent = 'Daily limit reached — come back tomorrow';
+            } else if (remaining <= 2) {
+                remainingEl.classList.add('low');
+                barFill.classList.add('low');
+            }
+        }
+
+        // Init on page load
+        const usedToday = getUsageToday();
+        updateUsageUI(usedToday);
+
         function showFileName(input) {
             const name = input.files[0] ? input.files[0].name : 'No file chosen';
             document.getElementById('file-name').textContent = name;
         }
-        document.querySelector('form').addEventListener('submit', function(e) {
+
+        document.getElementById('analyze-form').addEventListener('submit', function(e) {
             const file = document.getElementById('file').files[0];
             if (!file) return;
+
+            const used = getUsageToday();
+            if (used >= DAILY_LIMIT) {
+                e.preventDefault();
+                return;
+            }
+
+            incrementUsage();
+            updateUsageUI(used + 1);
             document.getElementById('loader').classList.add('active');
-            document.querySelector('.analyze-btn').disabled = true;
+            document.getElementById('analyze-btn').disabled = true;
         });
+
         fetch('/count')
             .then(r => r.json())
             .then(data => {
