@@ -2,4 +2,4 @@ flask
 requests
 pillow
 gunicorn
-anthropic
+flask-limiter
