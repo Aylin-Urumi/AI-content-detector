@@ -2,39 +2,77 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V6Z9KGWQDD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-V6Z9KGWQDD');
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Reality Check — Find out if an image is AI-generated or real. Instant authenticity analysis powered by AI.">
+    <meta name="description" content="Reality Check — AI Content Authenticity Analyzer.">
     <meta property="og:title" content="Reality Check — AI Content Authenticity Analyzer">
-    <meta property="og:description" content="Upload any image and find out instantly if it was AI-generated or real. Free, fast, and accurate.">
     <meta property="og:url" content="https://reality-check-rxqu.onrender.com">
     <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Reality Check — AI Content Authenticity Analyzer">
-    <meta name="twitter:description" content="Upload any image and find out instantly if it was AI-generated or real. Free, fast, and accurate.">
     <title>Error — Reality Check</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0a0f1a; font-family: 'Segoe UI', sans-serif; color: #e0f7f4; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+ 
         .nav { width: 100%; padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1a3a3a; }
         .logo { font-size: 1.3rem; font-weight: 700; color: #00d4b4; letter-spacing: 1px; text-decoration: none; }
         .logo span { color: #ffffff; }
-        .container { max-width: 600px; width: 100%; padding: 4rem 2rem; text-align: center; }
-        .error-icon { font-size: 4rem; margin-bottom: 1.5rem; }
-        h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; color: #ff6b6b; }
-        p { color: #7ab8b4; line-height: 1.7; margin-bottom: 2rem; font-size: 0.95rem; }
-        .back-btn { display: inline-block; background: #006a5c; color: #fff; padding: 0.85rem 2rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1rem; }
-        .back-btn:hover { background: #008a76; }
+        .nav-links a { color: #7ab8b4; text-decoration: none; margin-left: 1.5rem; font-size: 0.9rem; transition: color 0.2s; }
+        .nav-links a:hover { color: #00d4b4; }
+ 
+        .container { max-width: 520px; width: 100%; padding: 4rem 2rem; text-align: center; }
+ 
+        .error-icon-wrap { width: 90px; height: 90px; background: #130a0a; border: 1px solid #6a2020; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.8rem; font-size: 2.5rem; }
+ 
+        h1 { font-size: 1.7rem; font-weight: 800; color: #ff6b6b; margin-bottom: 0.8rem; }
+ 
+        .error-message { background: #0d1f2d; border: 1px solid #1a3a3a; border-left: 3px solid #ff6b6b; border-radius: 12px; padding: 1.2rem 1.5rem; margin-bottom: 2rem; text-align: left; }
+        .error-message p { color: #c0e8e4; line-height: 1.7; font-size: 0.95rem; }
+ 
+        .actions { display: flex; flex-direction: column; gap: 0.8rem; }
+        .btn-primary { display: block; background: #006a5c; color: #fff; padding: 0.85rem 2rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1rem; transition: background 0.2s; }
+        .btn-primary:hover { background: #008a76; }
+        .btn-secondary { display: block; background: #0d1f2d; border: 1px solid #1a3a3a; color: #7ab8b4; padding: 0.85rem 2rem; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 0.9rem; transition: border-color 0.2s, color 0.2s; }
+        .btn-secondary:hover { border-color: #00d4b4; color: #00d4b4; }
+ 
+        .hint { margin-top: 2rem; color: #2a5a5a; font-size: 0.8rem; line-height: 1.7; }
+        .hint strong { color: #3a7a7a; }
     </style>
 </head>
 <body>
     <nav class="nav">
         <a href="/" class="logo">Reality<span>Check</span></a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+        </div>
     </nav>
+ 
     <div class="container">
-        <div class="error-icon">⚠️</div>
+        <div class="error-icon-wrap">⚠️</div>
         <h1>Something went wrong</h1>
-        <p>{{ message }}</p>
-        <a href="/" class="back-btn">← Try again</a>
+ 
+        <div class="error-message">
+            <p>{{ message }}</p>
+        </div>
+ 
+        <div class="actions">
+            <a href="/" class="btn-primary">← Try Again</a>
+            <a href="/about" class="btn-secondary">Learn how it works</a>
+        </div>
+ 
+        <p class="hint">
+            <strong>Supported formats:</strong> JPG, PNG, WEBP<br>
+            <strong>Daily limit:</strong> 5 free analyses per visitor<br>
+            If the problem persists, try a different image or come back later.
+        </p>
     </div>
 </body>
 </html>
+ 
