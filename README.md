@@ -14,8 +14,6 @@
 
 [Live Demo](https://reality-check-rxqu.onrender.com) · [Report a Bug](https://github.com/Aylin-Urumi/ai-content-detector/issues) · [Request a Feature](https://github.com/Aylin-Urumi/ai-content-detector/issues)
 
-![Reality Check Screenshot](https://reality-check-rxqu.onrender.com)
-
 </div>
 
 ---
@@ -129,6 +127,8 @@ ai-content-detector/
 ├── requirements.txt        # Python dependencies
 ├── render.yaml             # Render deployment config
 ├── counter.txt             # Persistent global analysis counter
+├── static/
+│   └── favicon.ico         # Browser tab icon
 ├── templates/
 │   ├── index.html          # Homepage with upload form + live usage counter
 │   ├── result.html         # Image analysis result page
@@ -160,7 +160,7 @@ ai-content-detector/
 
 ## 👩‍💻 About the Author
 
-Built by [Aylin](https://linkedin.com/in/aylin-urumi-5784b1387) — Software Engineering student at Fırat University, Turkey.
+Built by [Aylin Urumi](https://linkedin.com/in/aylin-urumi-5784b1387) — Software Engineering student at Fırat University, Turkey.
 
 ---
 
